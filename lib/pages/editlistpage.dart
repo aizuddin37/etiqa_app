@@ -42,275 +42,297 @@ class _EditListPageState extends State<EditListPage> {
     end_date.selection =
         TextSelection.fromPosition(TextPosition(offset: end_date.text.length));
 
-    return BlocProvider(
-      create: (context) => ListCubit()..checkList(widget.id),
-      child: Scaffold(
-        appBar: AppBar(
-          backgroundColor: primaryColor,
-          foregroundColor: Colors.black,
-          title: Text("New list",
-              style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold)),
-        ),
-        body: BlocConsumer<ListCubit, ListState>(
-            builder: (context, state) {
-              if (state.list != null) {
-                return Container(
-                  child: Column(
-                    children: [
-                      SizedBox(height: 10),
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: primaryColor,
+        foregroundColor: Colors.black,
+        title: Text("New list",
+            style: TextStyle(
+                color: Colors.black,
+                fontSize: 20,
+                fontWeight: FontWeight.bold)),
+      ),
+      body: SingleChildScrollView(
+        physics: NeverScrollableScrollPhysics(),
+        child: ConstrainedBox(
+          constraints: BoxConstraints(
+            minWidth: MediaQuery.of(context).size.width,
+            minHeight: MediaQuery.of(context).size.height,
+          ),
+          child: BlocProvider(
+            create: (context) => ListCubit()..checkList(widget.id),
+            child: BlocConsumer<ListCubit, ListState>(
+                builder: (context, state) {
+                  if (state.list != null) {
+                    return Container(
+                      child: Column(
+                        children: [
+                          SizedBox(height: 10),
 
-                      //----------------------------Container of todo title-------------------------------------------------
-                      Container(
-                        padding: const EdgeInsets.all(10.0),
-                        child: Column(
-                          children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
+                          //----------------------------Container of todo title-------------------------------------------------
+                          Container(
+                            padding: const EdgeInsets.all(10.0),
+                            child: Column(
                               children: [
-                                Text('To-Do Title ',
-                                    style: TextStyle(
-                                        color: grayTextColor,
-                                        fontSize: 15,
-                                        fontWeight: FontWeight.normal)),
-                              ],
-                            ),
-                            //----------------------------TextField of title-------------------------------------------------
-                            TextField(
-                              autofocus: true,
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .subtitle2!
-                                  .copyWith(fontWeight: FontWeight.normal),
-                              textCapitalization: TextCapitalization.sentences,
-                              controller: title,
-                              decoration: InputDecoration(
-                                isDense: true,
-                                filled: true,
-                                fillColor: Colors.grey[200],
-                                border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(23.0),
-                                    borderSide: BorderSide(
-                                      color: primaryColor,
-                                    )),
-                                enabledBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(23.0),
-                                    borderSide: BorderSide(
-                                      color: primaryColor,
-                                    )),
-                                focusedBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(23.0),
-                                    borderSide: BorderSide(
-                                      color: primaryColor,
-                                    )),
-                                hintText: widget.list.title,
-                                hintStyle: Theme.of(context)
-                                    .textTheme
-                                    .bodyText1!
-                                    .copyWith(fontSize: 14),
-                                floatingLabelBehavior:
-                                    FloatingLabelBehavior.never,
-                              ),
-                              onChanged: (value) {
-                                title.text = value;
-                                if (value != title.text) {
-                                  setState(() {
-                                    title.text = value;
-                                  });
-                                }
-                              },
-                            ),
-                            SizedBox(height: 10),
-                          ],
-                        ),
-                      ),
-
-                      //----------------------------Container os start Date-------------------------------------------------
-                      Container(
-                        padding: const EdgeInsets.all(10.0),
-                        child: Column(
-                          children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                Text('Start Date ',
-                                    style: TextStyle(
-                                        color: grayTextColor,
-                                        fontSize: 15,
-                                        fontWeight: FontWeight.normal)),
-                              ],
-                            ),
-                            //----------------------------TextField of start Date-------------------------------------------------
-                            TextField(
-                              focusNode: AlwaysDisabledFocusNode(),
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .subtitle2!
-                                  .copyWith(fontWeight: FontWeight.normal),
-                              textCapitalization: TextCapitalization.sentences,
-                              controller: start_date,
-                              decoration: InputDecoration(
-                                isDense: true,
-                                filled: true,
-                                fillColor: Colors.grey[200],
-                                border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(10.0),
-                                    borderSide: BorderSide(
-                                      color: primaryColor,
-                                    )),
-                                enabledBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(10.0),
-                                    borderSide: BorderSide(
-                                      color: primaryColor,
-                                    )),
-                                focusedBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(10.0),
-                                    borderSide: BorderSide(
-                                      color: primaryColor,
-                                    )),
-                                hintText: DateFormat.yMMMd()
-                                    .format(widget.list.start_date!),
-                                hintStyle: Theme.of(context)
-                                    .textTheme
-                                    .bodyText1!
-                                    .copyWith(fontSize: 14),
-                                floatingLabelBehavior:
-                                    FloatingLabelBehavior.never,
-                              ),
-                              onTap: () {
-                                _selectstartDate(context);
-                              },
-                            ),
-                          ],
-                        ),
-                      ),
-
-                      //----------------------------Container of End date-------------------------------------------------
-                      Container(
-                        padding: const EdgeInsets.all(10.0),
-                        child: Column(
-                          children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                Text('Estimated End Date ',
-                                    style: TextStyle(
-                                        color: grayTextColor,
-                                        fontSize: 15,
-                                        fontWeight: FontWeight.normal)),
-                              ],
-                            ),
-                            //----------------------------TextField of endDate-------------------------------------------------
-                            TextField(
-                              focusNode: AlwaysDisabledFocusNode(),
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .subtitle2!
-                                  .copyWith(fontWeight: FontWeight.normal),
-                              textCapitalization: TextCapitalization.sentences,
-                              controller: end_date,
-                              decoration: InputDecoration(
-                                isDense: true,
-                                filled: true,
-                                fillColor: Colors.grey[200],
-                                border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(10.0),
-                                    borderSide: BorderSide(
-                                      color: primaryColor,
-                                    )),
-                                enabledBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(10.0),
-                                    borderSide: BorderSide(
-                                      color: primaryColor,
-                                    )),
-                                focusedBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(10.0),
-                                    borderSide: BorderSide(
-                                      color: primaryColor,
-                                    )),
-                                hintText: DateFormat.yMMMd()
-                                    .format(widget.list.end_date!),
-                                hintStyle: Theme.of(context)
-                                    .textTheme
-                                    .bodyText1!
-                                    .copyWith(fontSize: 14),
-                              ),
-                              onTap: () {
-                                _selectendDate(context);
-                              },
-                            ),
-                          ],
-                        ),
-                      ),
-                      //----------------------------Button to send input-------------------------------------------------
-                      ElevatedButton(
-                          onPressed: () {
-                            print("Here" + widget.list.no.toString());
-                            context.read<ListCubit>().onAddList(
-                                _selectedstartDate,
-                                _selectedendDate,
-                                title.text,
-                                widget.list.no!);
-                          },
-                          style: ButtonStyle(
-                              shape: MaterialStateProperty.all<
-                                      RoundedRectangleBorder>(
-                                  RoundedRectangleBorder(
-                                      borderRadius:
-                                          BorderRadius.circular(25.0))),
-                              backgroundColor: MaterialStateProperty.all(
-                                  Color.fromRGBO(238, 88, 31, 1))),
-                          child: Container(
-                            width: 150,
-                            height: 40,
-                            child: Center(
-                                child: Text(
-                              "Done",
-                              style: TextStyle(color: Colors.white),
-                            )),
-                          ))
-                    ],
-                  ),
-                );
-              } else {
-                return Container(
-                  child: Center(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        Center(
-                          child: Column(
-                            children: [
-                              Container(
-                                height: 200,
-                                width: 200,
-                                child: Image.asset(
-                                  'lib/assets/empty.png',
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    Text('To-Do Title ',
+                                        style: TextStyle(
+                                            color: grayTextColor,
+                                            fontSize: 15,
+                                            fontWeight: FontWeight.normal)),
+                                  ],
                                 ),
-                              ),
-                              SizedBox(height: 20),
-                              Text("list is not available",
-                                  style: TextStyle(
-                                      color: Colors.black,
-                                      fontSize: 10,
-                                      fontWeight: FontWeight.bold))
-                            ],
+                                //----------------------------TextField of title-------------------------------------------------
+                                TextField(
+                                  autofocus: true,
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .subtitle2!
+                                      .copyWith(fontWeight: FontWeight.normal),
+                                  textCapitalization:
+                                      TextCapitalization.sentences,
+                                  controller: title,
+                                  decoration: InputDecoration(
+                                    isDense: true,
+                                    filled: true,
+                                    fillColor: Colors.grey[200],
+                                    border: OutlineInputBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(23.0),
+                                        borderSide: BorderSide(
+                                          color: primaryColor,
+                                        )),
+                                    enabledBorder: OutlineInputBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(23.0),
+                                        borderSide: BorderSide(
+                                          color: primaryColor,
+                                        )),
+                                    focusedBorder: OutlineInputBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(23.0),
+                                        borderSide: BorderSide(
+                                          color: primaryColor,
+                                        )),
+                                    hintText: widget.list.title,
+                                    hintStyle: Theme.of(context)
+                                        .textTheme
+                                        .bodyText1!
+                                        .copyWith(fontSize: 14),
+                                    floatingLabelBehavior:
+                                        FloatingLabelBehavior.never,
+                                  ),
+                                  onChanged: (value) {
+                                    title.text = value;
+                                    if (value != title.text) {
+                                      setState(() {
+                                        title.text = value;
+                                      });
+                                    }
+                                  },
+                                ),
+                                SizedBox(height: 10),
+                              ],
+                            ),
                           ),
+
+                          //----------------------------Container os start Date-------------------------------------------------
+                          Container(
+                            padding: const EdgeInsets.all(10.0),
+                            child: Column(
+                              children: [
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    Text('Start Date ',
+                                        style: TextStyle(
+                                            color: grayTextColor,
+                                            fontSize: 15,
+                                            fontWeight: FontWeight.normal)),
+                                  ],
+                                ),
+                                //----------------------------TextField of start Date-------------------------------------------------
+                                TextField(
+                                  focusNode: AlwaysDisabledFocusNode(),
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .subtitle2!
+                                      .copyWith(fontWeight: FontWeight.normal),
+                                  textCapitalization:
+                                      TextCapitalization.sentences,
+                                  controller: start_date,
+                                  decoration: InputDecoration(
+                                    isDense: true,
+                                    filled: true,
+                                    fillColor: Colors.grey[200],
+                                    border: OutlineInputBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(10.0),
+                                        borderSide: BorderSide(
+                                          color: primaryColor,
+                                        )),
+                                    enabledBorder: OutlineInputBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(10.0),
+                                        borderSide: BorderSide(
+                                          color: primaryColor,
+                                        )),
+                                    focusedBorder: OutlineInputBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(10.0),
+                                        borderSide: BorderSide(
+                                          color: primaryColor,
+                                        )),
+                                    hintText: DateFormat.yMMMd()
+                                        .format(widget.list.start_date!),
+                                    hintStyle: Theme.of(context)
+                                        .textTheme
+                                        .bodyText1!
+                                        .copyWith(fontSize: 14),
+                                    floatingLabelBehavior:
+                                        FloatingLabelBehavior.never,
+                                  ),
+                                  onTap: () {
+                                    _selectstartDate(context);
+                                  },
+                                ),
+                              ],
+                            ),
+                          ),
+
+                          //----------------------------Container of End date-------------------------------------------------
+                          Container(
+                            padding: const EdgeInsets.all(10.0),
+                            child: Column(
+                              children: [
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    Text('Estimated End Date ',
+                                        style: TextStyle(
+                                            color: grayTextColor,
+                                            fontSize: 15,
+                                            fontWeight: FontWeight.normal)),
+                                  ],
+                                ),
+                                //----------------------------TextField of endDate-------------------------------------------------
+                                TextField(
+                                  focusNode: AlwaysDisabledFocusNode(),
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .subtitle2!
+                                      .copyWith(fontWeight: FontWeight.normal),
+                                  textCapitalization:
+                                      TextCapitalization.sentences,
+                                  controller: end_date,
+                                  decoration: InputDecoration(
+                                    isDense: true,
+                                    filled: true,
+                                    fillColor: Colors.grey[200],
+                                    border: OutlineInputBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(10.0),
+                                        borderSide: BorderSide(
+                                          color: primaryColor,
+                                        )),
+                                    enabledBorder: OutlineInputBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(10.0),
+                                        borderSide: BorderSide(
+                                          color: primaryColor,
+                                        )),
+                                    focusedBorder: OutlineInputBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(10.0),
+                                        borderSide: BorderSide(
+                                          color: primaryColor,
+                                        )),
+                                    hintText: DateFormat.yMMMd()
+                                        .format(widget.list.end_date!),
+                                    hintStyle: Theme.of(context)
+                                        .textTheme
+                                        .bodyText1!
+                                        .copyWith(fontSize: 14),
+                                  ),
+                                  onTap: () {
+                                    _selectendDate(context);
+                                  },
+                                ),
+                              ],
+                            ),
+                          ),
+                          //----------------------------Button to send input-------------------------------------------------
+                          ElevatedButton(
+                              onPressed: () {
+                                print("Here" + widget.list.no.toString());
+                                context.read<ListCubit>().onAddList(
+                                    _selectedstartDate,
+                                    _selectedendDate,
+                                    title.text,
+                                    widget.list.no!);
+                              },
+                              style: ButtonStyle(
+                                  shape: MaterialStateProperty.all<
+                                          RoundedRectangleBorder>(
+                                      RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(25.0))),
+                                  backgroundColor: MaterialStateProperty.all(
+                                      Color.fromRGBO(238, 88, 31, 1))),
+                              child: Container(
+                                width: 150,
+                                height: 40,
+                                child: Center(
+                                    child: Text(
+                                  "Done",
+                                  style: TextStyle(color: Colors.white),
+                                )),
+                              ))
+                        ],
+                      ),
+                    );
+                  } else {
+                    return Container(
+                      child: Center(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            Center(
+                              child: Column(
+                                children: [
+                                  Container(
+                                    height: 200,
+                                    width: 200,
+                                    child: Image.asset(
+                                      'lib/assets/empty.png',
+                                    ),
+                                  ),
+                                  SizedBox(height: 20),
+                                  Text("list is not available",
+                                      style: TextStyle(
+                                          color: Colors.black,
+                                          fontSize: 10,
+                                          fontWeight: FontWeight.bold))
+                                ],
+                              ),
+                            ),
+                          ],
                         ),
-                      ],
-                    ),
-                  ),
-                );
-              }
-            },
-            listenWhen: (previous, current) => current is MessageDialogState,
-            listener: (context, state) async {
-              if (state is MessageDialogState) {
-                _showMessage(context);
-              }
-            }),
+                      ),
+                    );
+                  }
+                },
+                listenWhen: (previous, current) =>
+                    current is MessageDialogState,
+                listener: (context, state) async {
+                  if (state is MessageDialogState) {
+                    _showMessage(context);
+                  }
+                }),
+          ),
+        ),
       ),
     );
   }
