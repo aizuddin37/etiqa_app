@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "659066640669",
+    "project_id": "maybank-c5572",
+    "storage_bucket": "maybank-c5572.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:659066640669:android:47f201e68eed49486229f4",
+        "android_client_info": {
+          "package_name": "com.example.maybank_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "659066640669-hsn894aupbr0kjf6flmba30dq9gb3999.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCIeRVPKC1J9DMPrIorHe5LAIB19iK-yBw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "659066640669-hsn894aupbr0kjf6flmba30dq9gb3999.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

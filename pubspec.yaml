@@ -1,0 +1,57 @@
+name: maybank_app
+description: A new Flutter project.
+
+
+publish_to: 'none' 
+
+
+version: 1.0.0+1
+
+environment:
+  sdk: ">=2.17.5 <3.0.0"
+
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+
+  build_runner: ^2.1.0
+  cupertino_icons: ^1.0.2
+  equatable: ^2.0.5
+  json_annotation: ^4.7.0
+  json_serializable: ^6.5.4
+  flutter_spinkit: ^5.1.0
+  cloud_firestore: ^4.3.1
+  flutter_bloc: ^8.1.1
+  lottie: ^1.4.2
+  intl: ^0.18.0
+  intro_slider: ^4.2.0
+  
+
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  
+  flutter_native_splash: ^2.2.8
+  flutter_launcher_icons: ^0.11.0
+flutter_icons:
+  android: true
+  ios: true
+  image_path: "lib/assets/etiqa.png"
+  min_sdk_android: 21
+  
+  flutter_lints: ^2.0.0
+flutter_native_splash:
+  image: lib/assets/etiqa.png
+  color: "#FFFFFF"
+
+
+flutter:
+
+  
+  uses-material-design: true
+
+  assets:
+    - lib/assets/
