@@ -327,7 +327,7 @@ _showMessage(BuildContext context) async {
           title: Column(
             children: [
               Text(
-                "Congratulations,You have successfully finished your task!",
+                "Congratulations on finished your task!",
                 maxLines: 2,
                 style: Theme.of(context).textTheme.headline2!.copyWith(
                     fontWeight: FontWeight.w400,
