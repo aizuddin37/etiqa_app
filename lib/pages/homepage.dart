@@ -296,19 +296,27 @@ class _MyHomePageState extends State<MyHomePage> {
               }
             }),
         //--------------------------Floating Button-------------------------------------------------
-        floatingActionButton: Container(
-          height: 45,
-          width: 45,
-          child: FloatingActionButton(
-            elevation: 10,
-            onPressed: () {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => CreateListPage()));
-            },
-            backgroundColor: buttonColor,
-            tooltip: 'Increment',
-            child: const Icon(Icons.add),
-          ),
+        floatingActionButton: BlocBuilder<ListCubit, ListState>(
+          builder: (context, state) {
+            return Container(
+              height: 45,
+              width: 45,
+              child: FloatingActionButton(
+                elevation: 10,
+                onPressed: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => CreateListPage(
+                                listLength: state.list.length,
+                              )));
+                },
+                backgroundColor: buttonColor,
+                tooltip: 'Increment',
+                child: const Icon(Icons.add),
+              ),
+            );
+          },
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       ),
